@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>214781877126-scb4500rh5jrqmv0mk72qf66o1v6odsn.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.214781877126-scb4500rh5jrqmv0mk72qf66o1v6odsn</string>
+	<key>API_KEY</key>
+	<string>AIzaSyALEq_16fZMREzrqnLmWPIfxGm21o0oa_M</string>
+	<key>GCM_SENDER_ID</key>
+	<string>214781877126</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.abdalrahim.coRetail</string>
+	<key>PROJECT_ID</key>
+	<string>coretail-b1e23</string>
+	<key>STORAGE_BUCKET</key>
+	<string>coretail-b1e23.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:214781877126:ios:d13dc943bcda1fd9</string>
+	<key>DATABASE_URL</key>
+	<string>https://coretail-b1e23.firebaseio.com</string>
+</dict>
+</plist>
