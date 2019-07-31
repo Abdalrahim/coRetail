@@ -41,6 +41,7 @@ class VCSignIn: VCBase {
                     UserDefaults.standard.set(fbUser.uid, forKey: "uid")
                     UserDefaults.standard.set(fbUser.email, forKey: "email")
                     UserDefaults.standard.set(fbUser.phoneNumber, forKey: "phone")
+                    
                     self.dismiss(animated: true, completion: nil)
                 }
             })

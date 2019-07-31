@@ -14,10 +14,14 @@ class Brand {
     var logoImage : String
     var coverImage : String
     var description: String
-    var type: Int
+    
+    
+    var type : String
+    
     var country : String
     var city : String
-    var avgPrice : Int
+    
+    var avgPrice : String
     
     var product: [Product]
     
@@ -28,10 +32,24 @@ class Brand {
         self.logoImage = Logo
         self.coverImage = Cover
         self.description = Desc
-        self.type = Type
+        
+        
+        self.type = Tools.typesOfPlace(type: Type)
+        
         self.country = Country
         self.city = City
-        self.avgPrice = AvgPrice
+        
+        if AvgPrice == 0 {
+            self.avgPrice = "$"
+        } else if AvgPrice == 1 {
+            self.avgPrice = "$$"
+        } else if AvgPrice == 2 {
+            self.avgPrice = "$$$"
+        } else {
+            self.avgPrice = "$$$$"
+        }
+        
+        
         self.product = Products
     }
 }

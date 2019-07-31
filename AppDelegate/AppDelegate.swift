@@ -14,11 +14,13 @@ import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
+    static public var dbDelegate:DBDelegate = DBDelegate()
+    
+    
     var window: UIWindow?
     let gcmMessageIDKey = "gcm.message_id"
     var deviceToken: String?
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -94,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func configureFirebase()  {
         // check for the default app otherwise app will be crash after logout and then login
         if FirebaseApp.app() == nil {
-            FirebaseApp.configure()
+            
         }
     }
     

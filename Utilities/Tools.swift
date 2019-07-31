@@ -31,4 +31,44 @@ class Tools {
         MBProgressHUD.hide(for: viewController.view, animated: true)
     }
     
+    static func typesOfPlace(type: Int ) -> String {
+        enum typeInt: Int {
+            case retail = 0
+            case cars = 1
+            case nonProfit = 2
+            case health = 3
+            case beauty = 4
+            case media = 5
+            case jewels = 6
+            case art = 7
+            case tech = 8
+            case furniture = 9
+            
+        }
+        
+        switch typeInt(rawValue: type)! {
+            
+        case .retail:
+            return "Retail"
+        case .cars:
+            return "Cars & Automotive"
+        case .nonProfit:
+            return "Non-Profit"
+        case .health:
+            return "Health & Fitness"
+        case .beauty:
+            return "Beauty And Cosmetics"
+        case .media:
+            return "Media & Entertainment"
+        case .jewels:
+            return "Accessories & Jewels"
+        case .art:
+            return "Art & Exhibition"
+        case .tech:
+            return "Technology"
+        case.furniture:
+            return "Furniture & interior"
+            
+        }
+    }
 }

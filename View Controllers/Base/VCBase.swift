@@ -18,6 +18,12 @@ class VCBase: UIViewController {
     
     var handle: AuthStateDidChangeListenerHandle?
     
+    let db = AppDelegate.dbDelegate.db!
+    
+    let isBrandUser : Bool = {
+        return true
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.interactivePopGestureRecognizer?.delegate = self

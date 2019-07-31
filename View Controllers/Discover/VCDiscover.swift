@@ -8,8 +8,16 @@
 
 import UIKit
 import Firebase
+//import SDW
 
 class VCDiscover: VCBase {
+    
+    @IBOutlet weak var discoverTable: UITableView!
+    
+    
+    var brands : [Brand] = []
+    var products : [Product] = []
+    var spaces : [Space] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,43 +28,68 @@ class VCDiscover: VCBase {
                 self.present(vc, animated: true, completion: nil)
             }
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
+        db.collection("spaces").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                print("Discovered")
+                for document in querySnapshot!.documents {
+                    let space = Space(doc: document.data())
+                    self.spaces.append(space)
+                }
+                self.discoverTable.reloadData()
+            }
+        }
     }
-    
-//    var angle : CGFloat = 0
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        self.welcomeTxt.text = ""
-//        self.angle = angle + 20
-//        let animator = UIViewPropertyAnimator(duration: 1, curve: .easeInOut) {
-//            self.welcomeTxt.transform = CGAffineTransform(rotationAngle: self.angle)
-//            self.welcomeTxt.text = self.list[.random(in: 0..<self.list.count)]
-//        }
-//        animator.startAnimation()
-//    }
-    
     
 }
 
 extension VCDiscover : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        if self.isBrandUser {
+            return self.spaces.count
+        } else {
+            return self.brands.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "space", for: indexPath) as! SpaceCell
-        cell.spaceImage.image = UIImage(named: "place\(indexPath.row + 1)")
-        
+        if self.isBrandUser {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "space", for: indexPath) as! SpaceCell
+            cell.space = self.spaces[indexPath.row]
+            cell.spaceImage.image = UIImage(named: "place\(indexPath.row + 1)")
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "brand", for: indexPath) as! BrandCell
+            cell.brand = self.brands[indexPath.row]
+            cell.brandLogo.image = UIImage(named: "place\(indexPath.row + 1)")
+            cell.productCollection.delegate = self
+            cell.productCollection.dataSource = self
+            return cell
+        }
+    }
+    
+}
+
+extension VCDiscover : UITableViewDelegate {
+    
+}
+
+extension VCDiscover : UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return products.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "product", for: indexPath) as! ProductCell
+        cell.product = self.products[indexPath.row]
         return cell
     }
     
     
 }
 
-extension VCDiscover : UITableViewDelegate {
+extension VCDiscover : UICollectionViewDelegate {
     
 }

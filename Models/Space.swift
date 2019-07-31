@@ -7,41 +7,44 @@
 //
 
 import Foundation
+import Firebase
 
 class Space {
     
     var id : String
     var name : String
-    var price : Double
+    var pricePerDay : Double
+    var isAvailable : Bool
     var images : [String]
     var description : String
-    var location : String
+    var location : GeoPoint
     var country : String
     var city : String
     var street : String
     var aminities : [Int]
     var type : Int
     var suitable : [Int]
-    var size : Double
-    var availabilityS : Date
-    var availabilityE : Date
+    var size : Int
+    var availabilityS : Date?
+    var availabilityE : Date?
     
-    init(Id: String, Name : String, Price : Double, Images: [String], Desc: String, Location: String, Country: String, City: String, Street : String, Amin : [Int], Type : Int, Suit: [Int], Size: Double, AvailS: Date, AvailE : Date) {
-        self.id = Id
-        self.name = Name
-        self.price = Price
-        self.images = Images
-        self.description = Desc
-        self.location = Desc
-        self.country = Country
-        self.city = City
-        self.street = Street
-        self.aminities = Amin
-        self.type = Type
-        self.suitable = Suit
-        self.size = Size
-        self.availabilityS = AvailS
-        self.availabilityE = AvailE
+    init(doc : [String : Any]) {
+        self.id = doc["spaceId"] as! String
+        self.name = doc["name"] as! String
+        self.pricePerDay = doc["pricePerDay"] as! Double
+        self.images = doc["images"] as! [String]
+        self.description = doc["description"] as! String
+        self.location = doc["location"] as! GeoPoint
+        self.country = doc["country"] as! String
+        self.city = doc["city"] as! String
+        self.street = doc["street"] as! String
+        self.aminities = doc["amenities"] as! [Int]
+        self.type = doc["type"] as! Int
+        self.suitable = doc["idealUses"] as! [Int]
+        self.size = doc["size"] as! Int
+        self.isAvailable = doc["isAvailable"] as! Bool
+//        self.availabilityS = doc["size"] as? Int
+//        self.availabilityE = doc["size"] as? Int
     }
     
 }

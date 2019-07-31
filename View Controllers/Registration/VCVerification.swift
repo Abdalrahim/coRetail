@@ -13,6 +13,8 @@ class VCVerification: VCBase {
     
     var user: User?
     
+    //let db = Firestore.firestore()
+    
     @IBOutlet weak var headerText: UILabel!
     @IBOutlet weak var tfVerification: UITextField!
     
@@ -42,7 +44,6 @@ class VCVerification: VCBase {
     }
     
     func createUser() {
-        let db = Firestore.firestore()
         
         if let verification = self.tfVerification.text?.trimmingCharacters(in: .whitespaces),
             let user = self.user,
@@ -83,7 +84,7 @@ class VCVerification: VCBase {
                     
                     Logger.normal(tag: "signInAndRetrieveData", message: fbUser)
                     
-                    db.collection("users").document(fbUser.uid).setData([
+                    self.db.collection("users").document(fbUser.uid).setData([
                         "id": fbUser.uid,
                         "name": user.name,
                         "email": user.email,

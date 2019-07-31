@@ -20,4 +20,14 @@ class SpaceCell: UITableViewCell {
     
     @IBOutlet weak var price: UILabel!
     
+    var space : Space! {
+        didSet {
+            
+            self.size.text = "\(space.size) SqM"
+            self.city.text = space.city
+            self.price.text = "SR \(space.pricePerDay) per day"
+            
+        }
+    }
+    
 }

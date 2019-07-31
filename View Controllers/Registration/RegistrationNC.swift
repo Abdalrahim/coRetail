@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Class only used to present regisration
 class RegistrationNC: UINavigationController {
     
 }
