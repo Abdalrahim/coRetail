@@ -79,8 +79,10 @@ class VCVerification: VCBase {
                     Logger.normal(tag: "New User", message: fbUser)
                     
                     UserDefaults.standard.set(fbUser.uid, forKey: "uid")
+                    UserDefaults.standard.set(user.isbrand, forKey: "isBrand")
                     UserDefaults.standard.set(user.email, forKey: "email")
                     UserDefaults.standard.set(user.phone, forKey: "phone")
+                    UserDefaults.standard.set(user.name, forKey: "name")
                     
                     Logger.normal(tag: "signInAndRetrieveData", message: fbUser)
                     

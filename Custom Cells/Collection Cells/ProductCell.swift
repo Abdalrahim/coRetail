@@ -16,12 +16,14 @@ class ProductCell: UICollectionViewCell {
     
     @IBOutlet weak var productPrice: UILabel!
     
+    @IBOutlet weak var inventory: CustomLabelUI!
+    
     var product : Product! {
         didSet {
             
             self.productName.text = product.name
-            self.productPrice.text = "\(product.price.rounded())"
-            
+            self.productPrice.text = "\(product.price.rounded()) SR"
+            self.inventory.text = "\(product.inventory)"
         }
     }
 }

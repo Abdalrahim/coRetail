@@ -10,7 +10,7 @@ import UIKit
 
 class VCWelcome: VCBase {
     
-    let singUp = ["Sign up now, or later?", "Sign up now!","> Sign up here <", "Join us 😎"]
+    let singUp = ["Sign up now.. or later?", "Sign up now!","> Sign up here <", "Join us 😎"]
     
     
     

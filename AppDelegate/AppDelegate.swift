@@ -12,6 +12,8 @@ import Firebase
 import UserNotifications
 import IQKeyboardManagerSwift
 
+let storage = "gs://coretail-b1e23.appspot.com/"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
@@ -154,9 +156,6 @@ extension AppDelegate : MessagingDelegate {
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         deviceToken = fcmToken
-//        if UserDefaults.userProfile() != nil {
-//            callUpdateTokenApi(token: fcmToken)
-//        }
         print("FCM Token ========>>>>>>>>>", fcmToken)
         // Connect to FCM since connection may have failed when attempted before having a token.
         connectToFcm()

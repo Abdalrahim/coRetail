@@ -31,7 +31,7 @@ class Tools {
         MBProgressHUD.hide(for: viewController.view, animated: true)
     }
     
-    static func typesOfPlace(type: Int ) -> String {
+    static func typeOfIndustry(type: Int ) -> String {
         enum typeInt: Int {
             case retail = 0
             case cars = 1
@@ -49,7 +49,7 @@ class Tools {
         switch typeInt(rawValue: type)! {
             
         case .retail:
-            return "Retail"
+            return "Retail & Fashion"
         case .cars:
             return "Cars & Automotive"
         case .nonProfit:
@@ -70,5 +70,37 @@ class Tools {
             return "Furniture & interior"
             
         }
+    }
+    
+    
+    static func avPrice(val : Int) -> String {
+        switch val {
+        case 0:
+            return "$"
+        case 1:
+            return "$$"
+        case 2:
+            return "$$$"
+        case 3:
+            return "$$$$"
+        default:
+            return "$"
+        }
+    }
+    
+    static func generateFileNameByDateAndTime() -> String {
+        let formater  = DateFormatter()
+        let numberFormater = NumberFormatter()
+        numberFormater.locale = .init(identifier: "En")
+        formater.dateFormat = "ddMMyyyyhhmmss"
+        if let final = numberFormater.number(from: "\(formater.string(from: Date()))"){
+            return "\(final)_\(UUID().uuidString)"
+        }
+        return UUID().uuidString
+    }
+    
+    static func randomString(length: Int) -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map{ _ in letters.randomElement()! })
     }
 }

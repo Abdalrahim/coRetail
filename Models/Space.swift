@@ -25,8 +25,10 @@ class Space {
     var type : Int
     var suitable : [Int]
     var size : Int
-    var availabilityS : Date?
-    var availabilityE : Date?
+    var availabilityS : Timestamp?
+    var availabilityE : Timestamp?
+    
+    
     
     init(doc : [String : Any]) {
         self.id = doc["spaceId"] as! String
@@ -40,11 +42,11 @@ class Space {
         self.street = doc["street"] as! String
         self.aminities = doc["amenities"] as! [Int]
         self.type = doc["type"] as! Int
-        self.suitable = doc["idealUses"] as! [Int]
+        self.suitable = doc["suitable"] as! [Int]
         self.size = doc["size"] as! Int
         self.isAvailable = doc["isAvailable"] as! Bool
-//        self.availabilityS = doc["size"] as? Int
-//        self.availabilityE = doc["size"] as? Int
+        self.availabilityS = doc["availabilityS"] as? Timestamp
+        self.availabilityE = doc["availabilityE"] as? Timestamp
     }
     
 }

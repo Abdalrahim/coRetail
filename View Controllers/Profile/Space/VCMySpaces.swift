@@ -10,6 +10,14 @@ import UIKit
 
 class VCMySpaces: VCBase {
     
+    var spaces : [Space] = []
+    
+    @IBAction func newSpace(_ sender: Any) {
+        let vc = mainstoryboard.instantiateViewController(withIdentifier: "VCSpaceType") as! VCSpaceType
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }

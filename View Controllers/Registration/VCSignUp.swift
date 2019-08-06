@@ -62,9 +62,11 @@ class VCSignUP: VCBase {
             let passTxt = password.text?.trimmingCharacters(in: .whitespaces),
             let emailTxt = self.email.text?.trimmingCharacters(in: .whitespaces) {
             let user = User.init(Name: name, Phone: phone, Email: emailTxt, Password: passTxt, isBrand: self.isBrand)
+            Tools.showHUD(viewController: self)
             PhoneAuthProvider.provider().verifyPhoneNumber(phone, uiDelegate: nil) { (verificationID, error) in
+                Tools.dismissHUD(viewController: self)
                 if let error = error {
-                    Logger.error(tag: "PhoneAuthProvider", message: error.localizedDescription)
+                    Logger.error(tag: "verifyPhoneNumber", message: error.localizedDescription)
                     self.present(Tools.alertWithOk(message: error.localizedDescription), animated: true, completion: nil)
                     
                 } else {

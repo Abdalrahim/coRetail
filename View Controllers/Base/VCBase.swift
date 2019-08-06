@@ -20,9 +20,9 @@ class VCBase: UIViewController {
     
     let db = AppDelegate.dbDelegate.db!
     
-    let isBrandUser : Bool = {
-        return true
-    }()
+    func isBrandUser() -> Bool {
+        return UserDefaults.standard.bool(forKey: "isBrand")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +48,7 @@ extension VCBase : UIGestureRecognizerDelegate {
     }
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let nav = navigationController else { return false }
         if (navigationController!.viewControllers.count > 1) {
             return true
         }
