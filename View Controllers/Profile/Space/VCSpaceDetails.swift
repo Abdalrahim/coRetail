@@ -31,13 +31,23 @@ class VCSpaceDetails: VCBase {
     }
     
     @IBAction func next(_ sender: Any) {
+        self.detail = [
+            "name" : self.name.text ?? "",
+            "description" : self.desc.text ?? "",
+            "street" : self.street.text ?? "",
+            "city" : self.city.text ?? "",
+            "country" : self.country.text ?? "",
+            "size" : self.sizeNum
+        ]
+        
         let vc = mainstoryboard.instantiateViewController(withIdentifier: "VCSpaceImages") as! VCSpaceImages
-        vc.options = self.options
-        vc.detail = self.detail
+        vc.spacedetail = self.spacedetail
+        vc.spacedetail.merge(self.detail) { (_, new) in new }
+        
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    var options : [[Int : Bool]] = [[:]]
+    var spacedetail : [String : Any] = [:]
     var detail : [String : Any] = [:]
     
     var sizeNum = 100

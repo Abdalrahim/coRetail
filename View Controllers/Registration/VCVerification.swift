@@ -86,7 +86,7 @@ class VCVerification: VCBase {
                     
                     Logger.normal(tag: "signInAndRetrieveData", message: fbUser)
                     
-                    self.db.collection("users").document(fbUser.uid).setData([
+                    self.db.collection("users").document(fbUser.uid).updateData([
                         "id": fbUser.uid,
                         "name": user.name,
                         "email": user.email,

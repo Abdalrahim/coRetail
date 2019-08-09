@@ -20,9 +20,17 @@ class VCProfile: VCBase {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.hidesBottomBarWhenPushed = true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let user = Auth.auth().currentUser {
+            self.username.text = user.email
+        }
     }
     
 }
@@ -60,22 +68,29 @@ extension VCProfile : UITableViewDelegate {
         switch indexPath.row {
         case 0:
             vc = mainstoryboard.instantiateViewController(withIdentifier: "VCMyBrands") as! VCMyBrands
-            
+            self.navigationController?.pushViewController(vc, animated: true)
         case 1:
             vc = mainstoryboard.instantiateViewController(withIdentifier: "VCMySpaces") as! VCMySpaces
-            
+            self.navigationController?.pushViewController(vc, animated: true)
         case 2:
-            do {
-                try Auth.auth().signOut()
-            } catch let err {
-                print(err.localizedDescription)
+            if UserDefaults.standard.value(forKey: "uid") != nil {
+                do {
+                    try Auth.auth().signOut()
+                } catch let err {
+                    print(err.localizedDescription)
+                }
+                UserDefaults.standard.removeObject(forKey: "uid")
+                UserDefaults.standard.removeObject(forKey:"email")
+                UserDefaults.standard.removeObject(forKey: "phone")
+                UserDefaults.standard.removeObject(forKey: "name")
+                
             }
             
         default:
             print(indexPath.row)
         }
         
-        self.navigationController?.pushViewController(vc, animated: true)
+        
         
     }
 }

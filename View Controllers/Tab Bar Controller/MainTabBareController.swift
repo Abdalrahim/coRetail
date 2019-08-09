@@ -9,5 +9,13 @@
 import UIKit
 
 class MainTabBarController: UITabBarController {
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        
+        if let uid = UserDefaults.standard.string(forKey: "uid") {
+            //print(item)
+            
+        }
+        
+    }
     
 }

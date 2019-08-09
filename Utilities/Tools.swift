@@ -73,6 +73,38 @@ class Tools {
     }
     
     
+    static func aminities(type: Int ) -> String {
+        enum typeInt: Int {
+            case aircon = 0
+            case kitchen = 1
+            case bathroom = 2
+            case security = 3
+            case fitting = 4
+            case chairs = 5
+            case internet = 6
+            
+        }
+        
+        switch typeInt(rawValue: type)! {
+            
+        case .aircon:
+            return "Air Conditioning"
+        case .kitchen:
+            return "Basic Kitchen"
+        case .bathroom:
+            return "Bathroom"
+        case .security:
+            return "Security System"
+        case .fitting:
+            return "Fitting Room"
+        case .chairs:
+            return "Chairs"
+        case .internet:
+            return "Internet"
+        }
+    }
+    
+    
     static func avPrice(val : Int) -> String {
         switch val {
         case 0:
@@ -103,4 +135,14 @@ class Tools {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         return String((0..<length).map{ _ in letters.randomElement()! })
     }
+    
+    static func getDate(format: String, date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        dateFormatter.dateFormat = format
+        dateFormatter.locale = Locale(identifier: "en_US")
+        return dateFormatter.string(from: date)
+    }
+    
 }

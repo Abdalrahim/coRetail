@@ -11,26 +11,9 @@ import Firebase
 
 class VCSpaceType: VCBase {
     
-    var options : [[Int : Bool]] = [
-        [
-            0 : false,
-            1 : false,
-            2 : false,
-            3 : false
-        ],
-        [
-            0 : false,
-            1 : false,
-            2 : false,
-            3 : false,
-            4 : false,
-            5 : false,
-            6 : false,
-            7 : false,
-            8 : false,
-            9 : false
-        ]
-    ]
+    var storeType : Int = 0
+    
+    var industry : [Int] = []
     
     let optionTitles : [String] = [
         "Entire store",
@@ -48,7 +31,8 @@ class VCSpaceType: VCBase {
     
     @IBAction func next(_ sender: Any) {
         let vc = mainstoryboard.instantiateViewController(withIdentifier: "VCSpaceDetails") as! VCSpaceDetails
-        vc.options = self.options
+        vc.spacedetail["suitable"] = self.industry
+        vc.spacedetail["type"] = self.storeType
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -85,22 +69,27 @@ extension VCSpaceType : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "option", for: indexPath) as! OptionCheck
         
-        guard let option = self.options[indexPath.section][indexPath.row] else {
-            return cell
-        }
-        
-        if option {
-            cell.checkBUtton.setImage(UIImage(named: "Check"), for: .normal)
-        } else {
-            cell.checkBUtton.setImage(UIImage(named: "Oval"), for: .normal)
-        }
         
         if indexPath.section == 0 {
+            
+            if indexPath.row == self.storeType {
+                cell.checkBUtton.setImage(UIImage(named: "Check"), for: .normal)
+            } else {
+                cell.checkBUtton.setImage(UIImage(named: "Oval"), for: .normal)
+            }
+            
             cell.optionSubtitle.isHidden = false
             cell.optionTitle.text = self.optionTitles[indexPath.row]
             cell.optionSubtitle.text = self.optionSubtitles[indexPath.row]
             
         } else {
+            
+            if industry.contains(indexPath.row) {
+                cell.checkBUtton.setImage(UIImage(named: "Check"), for: .normal)
+            } else {
+                cell.checkBUtton.setImage(UIImage(named: "Oval"), for: .normal)
+            }
+            
             cell.optionTitle.text = Tools.typeOfIndustry(type: indexPath.row)
             cell.optionSubtitle.isHidden = true
         }
@@ -112,19 +101,18 @@ extension VCSpaceType : UITableViewDataSource {
 
 extension VCSpaceType : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let option = self.options[indexPath.section][indexPath.row] else { return }
         if indexPath.section == 0 {
-            for i in 0..<4 {
-                self.options[0].updateValue(false, forKey: i)
-            }
-        }
-        
-        if option,
-            indexPath.section != 0 {
-            self.options[indexPath.section].updateValue(false, forKey: indexPath.row)
-            
+            self.storeType = indexPath.row
         } else {
-            self.options[indexPath.section].updateValue(true, forKey: indexPath.row)
+            if industry.contains(indexPath.row) {
+                for i in self.industry.enumerated() {
+                    if i.element == indexPath.row {
+                        self.industry.remove(at: i.offset)
+                    }
+                }
+            } else {
+                self.industry.append(indexPath.row)
+            }
         }
         
         tableView.reloadData()

@@ -34,9 +34,9 @@ class VCNewProduct: VCBase {
             let price = Double(Int(self.price.text ?? "0") ?? 0)
             Tools.showHUD(viewController: self)
             
-            let productId = Tools.randomString(length: 15)
+            let productId = Tools.randomString(length: 10)
             self.startUploading(productId: productId) {
-                let product = Product(Id: productId, Name: self.name.text ?? "", Price: price, Images: self.imagesName, Desc: self.desc.text, Inv: self.quantityNum)
+                let product = Product(Id: "prdct-" + productId, Name: self.name.text ?? "", Price: price, Images: self.imagesName, Desc: self.desc.text, Inv: self.quantityNum)
                 self.db.collection("brands").document(brand.id).updateData([
                     "products": FieldValue.arrayUnion([product.docmnt])
                 ]) { err in

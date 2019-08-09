@@ -44,25 +44,24 @@ class VCDiscover: VCBase {
                 if let err = err {
                     print("Error getting documents: \(err)")
                 } else {
+                    var brandArr : [Brand] = []
+                    
                     for document in querySnapshot!.documents {
-                        var brandArr : [Brand] = []
-                        
                         let brand = Brand(doc: document.data())
-                        
                         if let productsArr = document.data()["products"] as? [[String : Any]] {
                             var prdctArr : [Product] = []
                             for product in productsArr {
                                 let prdct = Product(doc: product)
                                 prdctArr.append(prdct)
                             }
-                            print(prdctArr.count)
                             brand.product = prdctArr
                         } else {
                             print("no products in brand")
                         }
-                        brandArr.append(Brand(doc: document.data()))
-                        self.brands = brandArr
+                        brandArr.append(brand)
                     }
+                    
+                    self.brands = brandArr
                     self.discoverTable.reloadData()
                 }
             }
@@ -71,12 +70,11 @@ class VCDiscover: VCBase {
                 if let err = err {
                     print("Error getting documents: \(err.localizedDescription)")
                 } else {
+                    var spaceArr : [Space] = []
                     for document in querySnapshot!.documents {
-                        var spaceArr : [Space] = []
                         spaceArr.append(Space(doc: document.data()))
-                        
-                        self.spaces = spaceArr
                     }
+                    self.spaces = spaceArr
                     self.discoverTable.reloadData()
                 }
             }
@@ -84,6 +82,12 @@ class VCDiscover: VCBase {
         
     }
     
+    @objc func openBrand(sender: UIButton) {
+        let brand = self.brands[sender.tag]
+        let vc = mainstoryboard.instantiateViewController(withIdentifier: "VCBrand") as! VCBrand
+        vc.initBrand = brand
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension VCDiscover : UITableViewDataSource {
@@ -110,6 +114,10 @@ extension VCDiscover : UITableViewDataSource {
             cell.productCollection.delegate = self
             cell.productCollection.dataSource = self
             
+            cell.viewBrand.tag = indexPath.row
+            cell.viewBrand.removeTarget(nil, action: nil, for: .allEvents)
+            cell.viewBrand .addTarget(self, action: #selector(self.openBrand(sender:)), for: .touchUpInside)
+            
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "space", for: indexPath) as! SpaceCell
@@ -127,8 +135,24 @@ extension VCDiscover : UITableViewDataSource {
     
 }
 
+
 extension VCDiscover : UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if !self.isBrandUser() {
+            let space = self.spaces[indexPath.row]
+            let vc = self.mainstoryboard.instantiateViewController(withIdentifier: "VCSpace") as! VCSpace
+            vc.initSpace = space
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if self.isBrandUser() {
+            return 388
+        } else {
+            return 304
+        }
+    }
 }
 
 extension VCDiscover : UICollectionViewDataSource {
@@ -161,10 +185,10 @@ extension VCDiscover : UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 2.0
+        return 5.0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 2.0
+        return 5.0
     }
 }

@@ -18,16 +18,16 @@ class VCSpaceImages: VCBase {
     }
     
     var spaceImages : [UIImage] = []
-    var options : [[Int : Bool]] = [[:]]
-    var detail : [String : Any] = [:]
+    var spacedetail : [String : Any] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(spacedetail)
     }
     
     @IBAction func next(_ sender: Any) {
         let vc = mainstoryboard.instantiateViewController(withIdentifier: "VCAminities") as! VCAminities
-        vc.spacedetail = detail
+        vc.spacedetail = spacedetail
         vc.spacedetail["images"] = self.spaceImages
         self.navigationController?.pushViewController(vc, animated: true)
     }

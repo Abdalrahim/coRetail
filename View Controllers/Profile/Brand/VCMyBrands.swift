@@ -22,19 +22,31 @@ class VCMyBrands: VCBase {
     
     @IBAction func backToBrands(segue:UIStoryboardSegue) { }
     
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        self.tabBarController?.hidesBottomBarWhenPushed = true
+//    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         guard let id = UserDefaults.standard.string(forKey: "uid") else {
             return
         }
         
-        db.collection("users").document(id).addSnapshotListener({ (querySnapshot, err) in
+        db.collection("users").document(id).getDocument(completion: { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
                 if let brandsArr = querySnapshot?.data()?["brands"] as? [DocumentReference] {
+                    var brandArr : [Brand] = []
+                    
                     for brandRef in brandsArr {
                         brandRef.getDocument(completion: { (snapshot, error) in
                             if let err = error {
@@ -53,10 +65,11 @@ class VCMyBrands: VCBase {
                                     } else {
                                         print("no products in brand")
                                     }
-                                    self.brands.append(brand)
+                                    brandArr.append(brand)
+                                    self.brands = brandArr
+                                    self.brandTable.reloadData()
                                 }
                             }
-                            self.brandTable.reloadData()
                         })
                     }
                 } else {

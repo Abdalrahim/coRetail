@@ -40,6 +40,7 @@ class VCBrandImages: VCBase {
         
         if let id = UserDefaults.standard.string(forKey: "uid"),
             let brand = self.initBrand {
+            Tools.showHUD(viewController: self)
             var ref: DocumentReference? = nil
             ref = db.collection("brands").addDocument(data: brand.docmnt) { err in
                 if let err = err {
@@ -57,8 +58,8 @@ class VCBrandImages: VCBase {
                     metadata.contentType = "image/jpeg"
                     let coverSize = CGSize(width: 375, height: 280)
                     let logoSize = CGSize(width: 130, height: 130)
-                    if let cover =  self.coverImage.image?.sd_resizedImage(with: coverSize, scaleMode: .aspectFill)?.jpegData(compressionQuality: 0.5),
-                        let logo = self.logoImage.image?.sd_resizedImage(with: logoSize, scaleMode: .aspectFill)?.jpegData(compressionQuality: 0.5) {
+                    if let cover =  self.coverImage.image?.sd_resizedImage(with: coverSize, scaleMode: .aspectFill)?.jpegData(compressionQuality: 1.0),
+                        let logo = self.logoImage.image?.sd_resizedImage(with: logoSize, scaleMode: .aspectFill)?.jpegData(compressionQuality: 1.0) {
                         coverRef.putData(cover, metadata: metadata, completion: { (meta, error) in
                             if let err = error {
                                 Logger.error(tag: "putData(cover", message: err.localizedDescription)
@@ -97,7 +98,8 @@ class VCBrandImages: VCBase {
                     
                     let vc = self.mainstoryboard.instantiateViewController(withIdentifier: "VCBrandProducts") as! VCBrandProducts
                     vc.initBrand = brand
-                    self.navigationController?.popToViewController(vc, animated: true)
+                    vc.initBrand?.id = brandId
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }
             }
         }
